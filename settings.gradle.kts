@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "WhoAmI"
 include(":app")
+include(":users")
+include(":users:domain")
+include(":users:data")
