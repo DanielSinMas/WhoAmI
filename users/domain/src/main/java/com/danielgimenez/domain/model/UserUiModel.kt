@@ -1,5 +1,7 @@
 package com.danielgimenez.domain.model
 
+import kotlinx.datetime.format.DateTimeComponents
+
 data class UserUiModel(
     val gender: String?,
     val name: Name?,
@@ -12,6 +14,8 @@ data class UserUiModel(
     val picture: Picture?,
     val nat: String?
 )
+
+fun UserUiModel.fullName() = (this.name?.first ?: "").plus(" ").plus(this.name?.last ?: "")
 
 data class Name(
     val title: String?,
@@ -48,6 +52,12 @@ data class Dob(
     val date: String?,
     val age: Int?
 )
+
+fun Dob.parseDate(): String {
+    val dateTime = DateTimeComponents.Formats.ISO_DATE_TIME_OFFSET
+        .parse(this.date ?: "")
+    return dateTime.dayOfMonth.toString().plus("-").plus(dateTime.monthNumber).plus("-").plus(dateTime.year)
+}
 
 data class Id(
     val name: String?,

@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,5 +30,12 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _users.value = getUsersUseCase()
         }
+    }
+
+    fun getUserByEmail(email: String): UserUiModel? {
+        return if (users.value is Response.Success) {
+             (users.value as Response.Success<List<UserUiModel>>).data.first { it.email == email }
+        }
+        else null
     }
 }
